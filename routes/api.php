@@ -5,27 +5,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NilaiController;
 
-// Route untuk mengambil data nilai
-Route::get('/nilai', [NilaiController::class, 'getNilai']);
-Route::get('/mahasiswa', [MahasiswaController::class, 'getMahasiswa']);
-Route::get('/mahasiswa/{mahasiswa:nim}', [MahasiswaController::class, 'getbyNim']);
+// ROute Mahasiswa
+Route::prefix('mahasiswa')->controller(MahasiswaController::class)->group(function () {
+    Route::get('/', 'getMahasiswa');
+    Route::get('/{mahasiswa:nim}', 'getbyNim');
+    Route::get('/nama/{nama}', 'getByNama');
+    Route::post('/', 'tambahdata');
+    Route::put('/{mahasiswa:nim}', 'updateData');
+    Route::patch('/{mahasiswa:nim}', 'updateData');
+    Route::delete('/{mahasiswa:nim}', 'deleteData');
+});
 
-// Route untuk Menambah data mahasiswa
-Route::post('/mahasiswa', [MahasiswaController::class, 'tambahdata']);
-
-Route::put('/mahasiswa/{mahasiswa:nim}', [MahasiswaController::class, 'updateData']);
-
-Route::patch('/mahasiswa/{mahasiswa:nim}', [MahasiswaController::class, 'updateData']);
-
-Route::delete('/mahasiswa/{mahasiswa:nim}', [MahasiswaController::class, 'deleteData']);
-
-Route::post('/nilai', [NilaiController::class, 'tambahdata']);
-Route::patch('/nilai/nim/{nim}', [NilaiController::class, 'updateData']);
-Route::delete('/nilai/nim/{nim}', [NilaiController::class, 'deleteData']);
-Route::put('/nilai/nim/{nim}', [NilaiController::class, 'updateData']);
-
-
-
+// ROute Nilai
+Route::prefix('nilai')->controller(NilaiController::class)->group(function () {
+    Route::get('/', 'getNilai');
+    Route::post('/', 'tambahdata');
+    Route::put('/nim/{nim}', 'updateData');
+    Route::patch('/nim/{nim}', 'updateData');
+    Route::delete('/nim/{nim}', 'deleteData');
+});
 
 
 
@@ -37,7 +35,9 @@ Route::put('/nilai/nim/{nim}', [NilaiController::class, 'updateData']);
 
 
 
-Route::get('/mahasiswa/nama/{nama}', [MahasiswaController::class, 'getByNama']);
+
+
+
 
 
 
