@@ -3,13 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
+use App\Models\nilai;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Email;
 
 class MahasiswaController extends Controller
 {
-   
 
+    public function deleteData(Request $request, Mahasiswa $mahasiswa)
+    {
+
+        $mahasiswa->delete();
+        return response()->json([
+            'message' => 'Data mahasiswa berhasil dihapus',
+            'data' => $mahasiswa
+        ], 201);
+    }
+
+    
     public function tambahdata(Request $request)
     {
         $validate = $request->validate([
@@ -32,13 +43,14 @@ class MahasiswaController extends Controller
         return response()->json($mahasiswa);
     }
 
-    public function getByNama($nama)
+    public function getbyNim($nim)
     {
-        $mahasiswa = Mahasiswa::where('nama', 'LIKE', '%' . $nama . '%')->get();
+        // 'LIKE', '%' . $nama . '%' tambah jika nama
+        $mahasiswa = Mahasiswa::where('nim', $nim)->get();
 
         if ($mahasiswa->isEmpty()) {
             return response()->json([
-                'message' => 'Mahasiswa dengan nama tersebut tidak ditemukan'
+                'message' => 'Mahasiswa dengan nim tersebut tidak ditemukan'
             ], 404);
         }
 

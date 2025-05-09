@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class nilai extends Model
 {
 
+
     protected $table = 'nilai';
+    protected $primaryKey = 'id';
+
+
+    protected $fillable = ['nim', 'idmk', 'nilai'];
+
     public function matakuliah()
     {
         return $this->belongsTo(matakuliah::class, 'idmk', 'idmk');

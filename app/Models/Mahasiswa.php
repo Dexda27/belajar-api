@@ -12,4 +12,8 @@ class Mahasiswa extends Model
 
     protected $fillable = ['nama', 'email', 'jurusan'];
 
+    protected $primaryKey = "nim";
+
+    protected $guarded = [];
+
 }
